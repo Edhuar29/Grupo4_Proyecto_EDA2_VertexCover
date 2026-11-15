@@ -1,6 +1,6 @@
-package ec.edu.epn.eda2.eduardo;
+package eduardo;
 
-import ec.edu.epn.eda2.karina.AlgoritmoExactoVertexCover;
+import karina.AlgoritmoExactoVertexCover;
 
 /**
  * ============================================================================
@@ -40,8 +40,8 @@ public class SuitePruebasFuncionales {
     public void prueba1GrafoSinAristas(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         /*
          * TODO EDUARDO:
-         * ec.edu.epn.eda2.model.Grafo g = new ec.edu.epn.eda2.model.Grafo(4); // sin aristas
-         * ec.edu.epn.eda2.model.ResultadoSolucion res = solver.resolverDecision(g, 0);
+         * model.Grafo g = new model.Grafo(4); // sin aristas
+         * model.ResultadoSolucion res = solver.resolverDecision(g, 0);
          * Validar si res.isTieneSolucion() == true y res.getCertificado().isEmpty().
          */
         System.out.println("-> Prueba 1 (Grafo sin aristas): pendiente de codificar por Eduardo.");
@@ -55,9 +55,9 @@ public class SuitePruebasFuncionales {
     public void prueba2GrafoEstrella(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         /*
          * TODO EDUARDO:
-         * ec.edu.epn.eda2.model.Grafo g = new ec.edu.epn.eda2.model.Grafo(5);
+         * model.Grafo g = new model.Grafo(5);
          * g.agregarArista(0, 1); g.agregarArista(0, 2); g.agregarArista(0, 3); g.agregarArista(0, 4);
-         * ec.edu.epn.eda2.model.ResultadoSolucion res = solver.resolverDecision(g, 1);
+         * model.ResultadoSolucion res = solver.resolverDecision(g, 1);
          * Validar si res.isTieneSolucion() == true y contiene el nodo central 0.
          */
         System.out.println("-> Prueba 2 (Grafo estrella): pendiente de codificar por Eduardo.");
@@ -71,7 +71,7 @@ public class SuitePruebasFuncionales {
     public void prueba3GrafoCicloImpar(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         /*
          * TODO EDUARDO:
-         * ec.edu.epn.eda2.model.Grafo g = new ec.edu.epn.eda2.model.Grafo(5);
+         * model.Grafo g = new model.Grafo(5);
          * g.agregarArista(0, 1); g.agregarArista(1, 2); g.agregarArista(2, 3);
          * g.agregarArista(3, 4); g.agregarArista(4, 0);
          * Probar con k = 2 (debe dar false).
@@ -88,7 +88,7 @@ public class SuitePruebasFuncionales {
     public void prueba4GrafoCompleto(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         /*
          * TODO EDUARDO:
-         * ec.edu.epn.eda2.model.Grafo g = new ec.edu.epn.eda2.model.Grafo(4);
+         * model.Grafo g = new model.Grafo(4);
          * Conectar todos los pares (0,1), (0,2), (0,3), (1,2), (1,3), (2,3).
          * Con k = 2 debe dar false; con k = 3 debe dar true.
          */
@@ -102,7 +102,7 @@ public class SuitePruebasFuncionales {
     public void prueba5CertificadoInvalido(VerificadorIndependiente verif) {
         /*
          * TODO EDUARDO:
-         * ec.edu.epn.eda2.model.Grafo g = new ec.edu.epn.eda2.model.Grafo(3);
+         * model.Grafo g = new model.Grafo(3);
          * g.agregarArista(0, 1); g.agregarArista(1, 2);
          * java.util.List<Integer> certificadoMalo = new java.util.ArrayList<>();
          * certificadoMalo.add(0); // Falta el nodo 1 o 2 para cubrir la arista (1, 2)

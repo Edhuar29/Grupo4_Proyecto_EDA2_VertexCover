@@ -5,7 +5,7 @@
             "type": "java",
             "name": "Ejecutar Proyecto EDA II (Main)",
             "request": "launch",
-            "mainClass": "ec.edu.epn.eda2.Main",
+            "mainClass": "Main",
             "projectName": "Proyecto_EDA2_VertexCover"
         }
     ]

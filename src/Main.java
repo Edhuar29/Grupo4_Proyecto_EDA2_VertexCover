@@ -1,13 +1,11 @@
-package ec.edu.epn.eda2;
-
-import ec.edu.epn.eda2.carolay.AnalisisComplejidad;
-import ec.edu.epn.eda2.eduardo.SuitePruebasFuncionales;
-import ec.edu.epn.eda2.eduardo.VerificadorIndependiente;
-import ec.edu.epn.eda2.karina.AlgoritmoExactoVertexCover;
-import ec.edu.epn.eda2.melany.BateriaBenchmarking;
-import ec.edu.epn.eda2.melany.ModificadorInstanciaRed;
-import ec.edu.epn.eda2.model.Grafo;
-import ec.edu.epn.eda2.model.ResultadoSolucion;
+import carolay.AnalisisComplejidad;
+import eduardo.SuitePruebasFuncionales;
+import eduardo.VerificadorIndependiente;
+import karina.AlgoritmoExactoVertexCover;
+import melany.BateriaBenchmarking;
+import melany.ModificadorInstanciaRed;
+import model.Grafo;
+import model.ResultadoSolucion;
 
 import java.util.Scanner;
 

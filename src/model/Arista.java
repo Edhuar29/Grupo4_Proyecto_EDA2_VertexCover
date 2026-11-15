@@ -1,4 +1,4 @@
-package ec.edu.epn.eda2.model;
+package model;
 
 /**
  * Representa un enlace de red no dirigido entre dos dispositivos (u, v).

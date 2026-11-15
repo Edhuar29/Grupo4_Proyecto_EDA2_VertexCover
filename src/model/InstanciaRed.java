@@ -1,4 +1,4 @@
-package ec.edu.epn.eda2.model;
+package model;
 
 /**
  * Representa la instancia de entrada del problema de decision:

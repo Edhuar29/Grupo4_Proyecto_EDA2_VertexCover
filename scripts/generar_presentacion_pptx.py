@@ -156,7 +156,7 @@ def create_deck():
                     "title": "Separación por Responsabilidades",
                     "bullets": [
                         "Paquete model/: Clases POJO inmutables Arista, Grafo, InstanciaRed y ResultadoSolucion.",
-                        "Paquetes por integrante: ec.edu.epn.eda2.karina, eduardo, melany, carolay.",
+                        "Paquetes por integrante: karina, eduardo, melany, carolay.",
                         "Cero librerías externas que resuelvan la lógica: código Java estándar puro."
                     ]
                 },

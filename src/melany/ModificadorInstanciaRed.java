@@ -1,8 +1,8 @@
-package ec.edu.epn.eda2.melany;
+package melany;
 
-import ec.edu.epn.eda2.karina.AlgoritmoExactoVertexCover;
-import ec.edu.epn.eda2.model.Arista;
-import ec.edu.epn.eda2.model.Grafo;
+import karina.AlgoritmoExactoVertexCover;
+import model.Arista;
+import model.Grafo;
 
 /**
  * ============================================================================
@@ -43,8 +43,8 @@ public class ModificadorInstanciaRed {
          *    Grafo redModificada = clonarGrafo(redOriginal);
          *    redModificada.agregarArista(uElegido, vElegido);
          * 3. Calcular coberturas mínimas óptimas:
-         *    ec.edu.epn.eda2.model.ResultadoSolucion resOrig = solverKarina.encontrarCoberturaMinima(redOriginal);
-         *    ec.edu.epn.eda2.model.ResultadoSolucion resMod = solverKarina.encontrarCoberturaMinima(redModificada);
+         *    model.ResultadoSolucion resOrig = solverKarina.encontrarCoberturaMinima(redOriginal);
+         *    model.ResultadoSolucion resMod = solverKarina.encontrarCoberturaMinima(redModificada);
          * 4. Calcular la variación:
          *    int kOrig = resOrig.getCertificado().size();
          *    int kMod = resMod.getCertificado().size();

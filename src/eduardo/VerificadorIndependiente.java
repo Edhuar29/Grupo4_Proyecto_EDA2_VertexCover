@@ -1,6 +1,6 @@
-package ec.edu.epn.eda2.eduardo;
+package eduardo;
 
-import ec.edu.epn.eda2.model.Grafo;
+import model.Grafo;
 import java.util.List;
 
 /**
@@ -43,7 +43,7 @@ public class VerificadorIndependiente {
          *        tieneSensor[nodo] = true;
          *    }
          * 4. Recorrer cada Arista (u, v) en grafo.getAristas():
-         *    for (ec.edu.epn.eda2.model.Arista a : grafo.getAristas()) {
+         *    for (model.Arista a : grafo.getAristas()) {
          *        if (!tieneSensor[a.getU()] && !tieneSensor[a.getV()]) {
          *            System.out.println("INVÁLIDO: La arista " + a + " no tiene sensor en ningún extremo.");
          *            return false;

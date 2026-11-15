@@ -1,7 +1,7 @@
-package ec.edu.epn.eda2.melany;
+package melany;
 
-import ec.edu.epn.eda2.karina.AlgoritmoExactoVertexCover;
-import ec.edu.epn.eda2.model.Grafo;
+import karina.AlgoritmoExactoVertexCover;
+import model.Grafo;
 
 /**
  * ============================================================================
@@ -63,7 +63,7 @@ public class BateriaBenchmarking {
          *    - Crear una lista para almacenar tiempos: java.util.List<Long> tiempos = new java.util.ArrayList<>();
          *    - Hacer un ciclo for desde 0 hasta repeticiones:
          *        long tInicio = System.nanoTime();
-         *        ec.edu.epn.eda2.model.ResultadoSolucion res = solverKarina.encontrarCoberturaMinima(red);
+         *        model.ResultadoSolucion res = solverKarina.encontrarCoberturaMinima(red);
          *        long tFin = System.nanoTime();
          *        tiempos.add(tFin - tInicio);
          *    - Ordenar la lista: java.util.Collections.sort(tiempos);

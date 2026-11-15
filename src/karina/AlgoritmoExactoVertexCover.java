@@ -1,7 +1,7 @@
-package ec.edu.epn.eda2.karina;
+package karina;
 
-import ec.edu.epn.eda2.model.Grafo;
-import ec.edu.epn.eda2.model.ResultadoSolucion;
+import model.Grafo;
+import model.ResultadoSolucion;
 
 import java.util.List;
 

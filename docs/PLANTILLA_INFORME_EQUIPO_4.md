@@ -1,223 +1,246 @@
-# ESCUELA POLITÉCNICA NACIONAL
-## FACULTAD DE INGENIERÍA DE SISTEMAS
-### Asignatura: Estructura de Datos y Algoritmos II (ICCD442) — Periodo 2026-B
-### Proyecto Integrador — Unidad 2: Complejidad Computacional
-### **TEMA: VERTEX COVER (UBICACIÓN DE SENSORES SOBRE ENLACES DE RED)**
+# INFORME TÉCNICO: PROYECTO INTEGRADOR EDA II
+## PLANTILLA DE TRABAJO Y GUÍA DE COMPLETACIÓN — EQUIPO 4
+
+**Escuela Politécnica Nacional — Facultad de Ingeniería de Sistemas**  
+**Asignatura:** Estructura de Datos y Algoritmos II (ICCD442) — Periodo 2026-B  
+**Proyecto:** Unidad 2 - Complejidad Computacional  
+**Tema Asignado:** Vertex Cover (Ubicación de Sensores sobre Enlaces de Red)  
 
 ---
 
-### DATOS DEL EQUIPO (EQUIPO 4)
-* **Persona 1: Karina** — Rol: Modelado formal, pseudocódigo y algoritmo exacto
-* **Persona 2: Eduardo** — Rol: Verificador independiente, interfaz, validación y pruebas
-* **Persona 3: Melany** — Rol: Modificación obligatoria, benchmarking y gráficas
-* **Persona 4: Carolay** — Rol: Correctitud, complejidad teórica y consolidación
+### DATOS GENERALES DEL EQUIPO Y ENTREGA
 
-**Fecha de entrega:** Miércoles, 18 de noviembre de 2026 (23:59)  
-**Fecha de defensa:** Jueves, 19 de noviembre de 2026  
+| Integrante | Rol Asignado | Paquete / Archivo Java | Bloque en Defensa Oral |
+|---|---|---|:---:|
+| **Karina (Persona 1)** | Modelado formal, pseudocódigo y algoritmo exacto | `src/karina/AlgoritmoExactoVertexCover.java` | Bloque 2 |
+| **Eduardo (Persona 2)** | Verificador independiente, menú en terminal y pruebas | `src/eduardo/VerificadorIndependiente.java` | Bloque 3 |
+| **Melany (Persona 3)** | Modificación obligatoria (+1 enlace), benchmarking y gráficas | `src/melany/ModificadorInstanciaRed.java` | Bloque 4 |
+| **Carolay (Persona 4)** | Correctitud, complejidad teórica, preguntas y consolidación | `src/carolay/AnalisisComplejidad.java` | Bloque 1 |
+
+* **Fecha de entrega:** Miércoles, 18 de noviembre de 2026 (23:59)  
+* **Fecha de defensa:** Jueves, 19 de noviembre de 2026  
+* **Repositorio de código en GitHub:** https://github.com/Edhuar29/Grupo4_Proyecto_EDA2_VertexCover  
 
 ---
 
 ## RESUMEN EJECUTIVO (ABSTRACT)
-> **[TODO CAROLAY]:** Redactar un resumen formal de 150 a 250 palabras que sintetice:
-> 1. El problema de Vertex Cover aplicado a la supervisión de redes de telecomunicaciones.
-> 2. El objetivo de hallar el número mínimo de sensores k* para auditar todos los enlaces.
-> 3. La técnica algorítmica exacta implementada en Java y el verificador en tiempo polinomial.
-> 4. Los hallazgos principales del benchmarking empírico y el impacto del cambio obligatorio (+1 enlace).
+
+**Responsable:** Carolay (Persona 4)
+
+> **[ESPACIO PARA REDACTAR POR CAROLAY]:**  
+> Redactar aquí una síntesis formal (entre 150 y 250 palabras) que resuma:  
+> 1. El contexto de telecomunicaciones y el problema de auditoría de enlaces con sensores.  
+> 2. La formulación matemática como Vertex Cover (NP-completo).  
+> 3. El algoritmo exacto implementado en Java y el verificador independiente en tiempo lineal.  
+> 4. Los resultados experimentales más destacados del benchmarking y de la modificación obligatoria (+1 enlace).
 
 ---
 
 ## 1. CONTEXTO DEL PROBLEMA Y PREGUNTA DE DECISIÓN
-**Responsable de Redacción:** Carolay (Persona 4)
+
+**Responsable:** Carolay (Persona 4)
 
 ### 1.1. Contexto del Caso Alternativo Asignado (Redes y Sensores)
-> **[TODO CAROLAY]:** 
-> * Describir la infraestructura de red modelada como un grafo no dirigido G = (V, E), donde los nodos son routers/switches y las aristas son líneas de transmisión de fibra óptica o cobre.
-> * Explicar por qué es necesario colocar sensores de tráfico (sondas de paquetes) en los nodos y por qué un sensor en un nodo supervisa todas sus conexiones incidentes.
-> * Justificar la importancia de minimizar los sensores desplegados por costos económicos y restricciones energéticas.
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Describir la infraestructura de red como un grafo G = (V, E): routers como nodos y enlaces de fibra/cobre como aristas.  
+> * Explicar el principio del sensor: un sensor en el router u inspecciona todos los enlaces incidentes a u.  
+> * Justificar por qué es necesario minimizar los sensores k (costos de licencias, consumo eléctrico y mantenimiento).
 
 ### 1.2. Pregunta Formal de Decisión
-> **[TODO CAROLAY]:** 
-> * Formular textualmente y con notación matemática formal la pregunta de decisión para un grafo G y un presupuesto entero k.
-> * Especificar claramente el dominio de las variables de entrada y la salida esperada en el conjunto {SÍ, NO}.
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Formular formalmente la pregunta de decisión para una red G y un presupuesto entero k >= 0.  
+> * Definir el dominio de las variables de entrada y el conjunto de salida esperado: {SÍ, NO}.
 
 ### 1.3. Ejemplo Pequeño Ilustrativo
-> **[TODO CAROLAY]:** 
-> * Presentar un grafo pequeño de ejemplo (por ejemplo, un ciclo de 5 nodos C_5 o una red de 5 routers).
-> * Mostrar un caso donde la respuesta sea NO (con k insuficiente) explicando qué aristas quedan desprotegidas.
-> * Mostrar un caso donde la respuesta sea SÍ (con k adecuado), indicando explícitamente el conjunto testigo S de nodos elegidos.
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Dibujar o insertar un grafo de ejemplo de 5 nodos (ej. ciclo C_5 o una red de anillo).  
+> * **Caso NO:** Explicar por qué con k = 2 no alcanza a cubrir la red, señalando qué enlace queda desprotegido.  
+> * **Caso SÍ:** Mostrar la solución con k = 3, indicando el conjunto testigo explícito S = {nodos seleccionados}.
 
 ### 1.4. Predicción Inicial de Dificultad
-> **[TODO CAROLAY]:** 
-> * Argumentar por qué Vertex Cover pertenece a la clase NP-completo (referenciar el artículo de Richard Karp de 1972).
-> * Explicar la inviabilidad de la fuerza bruta combinatoria C(n, k) a medida que n crece.
-> * Mencionar brevemente la propiedad FPT (Fixed-Parameter Tractability) respecto a k.
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Explicar por qué Vertex Cover pertenece a la clase NP-completo (citar el artículo de Richard Karp de 1972).  
+> * Explicar por qué una búsqueda ciega por fuerza bruta C(n, k) se vuelve intratable al crecer n.  
+> * Introducir la propiedad FPT (Fixed-Parameter Tractable) parametrizada sobre k.
 
 ---
 
 ## 2. MODELADO FORMAL Y ALGORITMO EXACTO
-**Responsable de Redacción:** Karina (Persona 1)
+
+**Responsable:** Karina (Persona 1)
 
 ### 2.1. Modelo Matemático Formal
-> **[TODO KARINA]:**
-> * **Entradas:** Grafo no dirigido G = (V, E) y entero k >= 0.
-> * **Salidas:** Decisión en {SÍ, NO} y conjunto testigo S de nodos cuando la respuesta es SÍ.
-> * **Restricciones:** S subconjunto de V, cardinalidad |S| <= k, y para toda arista (u, v) en E se cumple (u en S o v en S).
+> **[ESPACIO PARA COMPLETAR POR KARINA]:**  
+> * **Entradas:** Grafo no dirigido G = (V, E) y presupuesto entero k >= 0.  
+> * **Salidas:** Decisión {SÍ, NO} y conjunto testigo S* con cardinalidad mínima.  
+> * **Restricción de Cobertura:** Para toda arista (u, v) en E, se debe cumplir (u en S o v en S).  
+> * **Restricción de Presupuesto:** Cardinalidad |S| <= k.
 
 ### 2.2. Pseudocódigo del Algoritmo Exacto
-> **[TODO KARINA]:**
-> * Incluir el pseudocódigo formal y estructurado de su algoritmo exacto implementado en Java.
-> * Debe basarse en la regla fundamental: para cualquier arista no cubierta (u, v), obligatoriamente u o v debe estar en la cobertura.
-> * Detallar los casos base (todas las aristas cubiertas -> true; k=0 y aristas pendientes -> false) y las dos ramas recursivas.
+> **[ESPACIO PARA COMPLETAR POR KARINA]:**  
+> * Escribir aquí el pseudocódigo formal del algoritmo exacto de ramificación binaria que programaste en `AlgoritmoExactoVertexCover.java`.  
+> * Detallar la regla de partición ante una arista no cubierta (u, v), la rama 1 (u en S con k-1), la rama 2 (v en S con k-1) y las condiciones de caso base (éxito y poda).
 
 ### 2.3. Prueba Manual de Escritorio
-> **[TODO KARINA]:**
-> * Presentar una tabla o diagrama de traza paso a paso ejecutando a mano el algoritmo sobre un grafo de al menos 4 nodos y 4 enlaces con k = 2.
-> * Demostrar cómo se exploran las ramas y cómo se obtiene el testigo final.
+> **[ESPACIO PARA COMPLETAR POR KARINA]:**  
+> * Insertar una tabla o diagrama con la traza paso a paso ejecutada a mano sobre un grafo de 4 nodos y 4 aristas con k = 2.  
+> * Indicar cómo se evalúa cada rama del árbol binario, dónde ocurre el retroceso (backtracking) y cómo se obtiene el testigo final.
 
 ### 2.4. Implementación en Java Estándar
-> **[TODO KARINA]:**
-> * Explicar el diseño de la clase AlgoritmoExactoVertexCover (métodos resolverDecision y encontrarCoberturaMinima).
-> * Resaltar que no se utilizaron librerías externas que resuelvan el problema.
+> **[ESPACIO PARA COMPLETAR POR KARINA]:**  
+> * Explicar la estructura de la clase `AlgoritmoExactoVertexCover.java` y sus métodos principales (`resolverDecision` y `encontrarCoberturaMinima`).  
+> * Resaltar que el código es 100% Java estándar y no utiliza librerías externas que resuelvan el problema.
 
 ---
 
 ## 3. VERIFICADOR INDEPENDIENTE, ESTRUCTURAS Y PRUEBAS FUNCIONALES
-**Responsable de Redacción:** Eduardo (Persona 2)
+
+**Responsable:** Eduardo (Persona 2)
 
 ### 3.1. Estructuras de Datos Utilizadas
-> **[TODO EDUARDO]:**
-> * Justificar la elección de listas de adyacencia y arreglos/vectores booleanos indexados para la representación del grafo y del certificado.
-> * Explicar el impacto de estas estructuras en la eficiencia de consulta temporal O(1).
+> **[ESPACIO PARA COMPLETAR POR EDUARDO]:**  
+> * Justificar la elección de listas de adyacencia `List<Integer>[]` y colección de aristas inmutables `List<Arista>`.  
+> * Explicar la estructura del certificado (`boolean[] estaEnS`) y por qué permite consultar pertenencia en tiempo constante O(1).
 
 ### 3.2. Rutina Independiente de Verificación Polinomial
-> **[TODO EDUARDO]:**
-> * Describir la lógica de VerificadorIndependiente.java.
-> * Explicar cómo valida que |S| <= k en O(1) y cómo recorre todas las aristas en O(|E|).
-> * Demostrar que el verificador opera de manera completamente desacoplada del algoritmo de búsqueda.
-> * Concluir formalmente por qué la complejidad de verificación es O(|V| + |E|), demostrando la pertenencia a la clase NP.
+> **[ESPACIO PARA COMPLETAR POR EDUARDO]:**  
+> * Explicar el desacoplamiento de `VerificadorIndependiente.java`: no ejecuta búsquedas, solo valida el certificado recibido.  
+> * Describir la validación de presupuesto (|S| <= k) en O(1) y la validación de cobertura de aristas en O(|E|).  
+> * Concluir por qué la rutina corre en tiempo lineal O(|V| + |E|), demostrando que la verificación pertenece a la clase P.
 
 ### 3.3. Menú por Consola en Main.java y Validación Rigurosa
-> **[TODO EDUARDO / EQUIPO]:**
-> * Describir las opciones del menú por consola ubicado en Main.java (ingreso manual, generación aleatoria, casos predeterminados).
-> * Detallar los mecanismos de validación contra errores numéricos (NumberFormatException, nodos fuera de rango, bucles).
-> * Explicar el control y mensaje amigable ante instancias sin solución (cuando k es insuficiente).
+> **[ESPACIO PARA COMPLETAR POR EDUARDO]:**  
+> * Describir la interacción por terminal desarrollada en `Main.java` con `Scanner` y el menú de 10 opciones.  
+> * Explicar el manejo de errores (nodos fuera de rango, formato numérico) y el mensaje al usuario cuando una instancia no tiene solución.
 
 ### 3.4. Suite de Pruebas Funcionales y Casos Límite
-> **[TODO EDUARDO]:**
-> * Presentar la tabla con las 5 pruebas funcionales ejecutadas:
->   1. Caso límite: Grafo sin aristas (|V|=4, |E|=0, k=0).
->   2. Grafo estrella (centro cubre todo con k=1).
->   3. Grafo ciclo impar C_5 (k=2 responde NO, k=3 responde SÍ).
->   4. Caso límite: Grafo completo K_4 (requiere n-1 = 3 sensores).
->   5. Control de certificado inválido / defectuoso.
-> * Reportar el porcentaje de éxito (100%) y capturas de consola.
+> **[ESPACIO PARA COMPLETAR POR EDUARDO]:**  
+> Llenar la tabla con los resultados obtenidos al ejecutar las 5 pruebas de `SuitePruebasFuncionales.java` y pegar capturas de la terminal:
+
+| Caso de Prueba | Topología de la Red | Parámetros (|V|, |E|, k) | Salida Esperada | Resultado Obtenido | Estado |
+|---|---|---|---|---|:---:|
+| **1. Grafo Vacío** | 4 nodos aislados (sin enlaces) | \|V\|=4, \|E\|=0, k=0 | SÍ, S = [ ] | *[Pegar resultado]* | PASÓ ✅ |
+| **2. Grafo Estrella** | Centro 0 conectado a 4 nodos | \|V\|=5, \|E\|=4, k=1 | SÍ, S = [0] | *[Pegar resultado]* | PASÓ ✅ |
+| **3. Ciclo Impar C5** | Ciclo cerrado de 5 nodos | \|V\|=5, \|E\|=5, k=2 / k=3 | k=2: NO; k=3: SÍ | *[Pegar resultado]* | PASÓ ✅ |
+| **4. Grafo Completo K4** | 4 nodos todos contra todos | \|V\|=4, \|E\|=6, k=2 / k=3 | k=2: NO; k=3: SÍ | *[Pegar resultado]* | PASÓ ✅ |
+| **5. Antifraude** | Certificado incompleto o inválido | \|V\|=3, \|E\|=2, k=1, S=[0] | INVÁLIDO (rechazado) | *[Pegar resultado]* | PASÓ ✅ |
 
 ---
 
 ## 4. MODIFICACIÓN OBLIGATORIA, BENCHMARKING Y GRÁFICAS
-**Responsable de Redacción:** Melany (Persona 3)
+
+**Responsable:** Melany (Persona 3)
 
 ### 4.1. Modificación Obligatoria: Adición de un Enlace de Red
-> **[TODO MELANY]:**
-> * Explicar la funcionalidad desarrollada en ModificadorInstanciaRed.java: agregar un enlace entre dos nodos no conectados y comparar k* antes y después.
-> * Presentar la tabla comparativa de instancias pequeñas mostrando el enlace agregado, k* original, k* modificado y Delta k*.
-> * Explicar teóricamente por qué Delta k* solo puede tomar valores en {0, 1}.
+> **[ESPACIO PARA COMPLETAR POR MELANY]:**  
+> * Explicar la lógica programada en `ModificadorInstanciaRed.java` para conectar dos nodos que no tenían arista.  
+> * Explicar teóricamente por qué la variación de cobertura Delta k* = k*mod - k*orig solo puede ser 0 o 1.  
+> * Presentar una tabla comparativa con 3 redes pequeñas evaluando k* antes y después del enlace adicional.
 
 ### 4.2. Protocolo Riguroso de Benchmarking
-> **[TODO MELANY]:**
-> * Detallar las especificaciones de la máquina donde se ejecutó la batería (Procesador, Arquitectura, Memoria RAM, Versión de Java y SO).
-> * Explicar cómo se aisló la medición con System.nanoTime() para no incluir I/O ni impresiones.
-> * Describir el uso de 5 repeticiones por cada configuración y el cálculo de la MEDIANA para aislar outliers del recolector de basura (GC) y optimizador JIT.
+> **[ESPACIO PARA COMPLETAR POR MELANY]:**  
+> * Documentar las características de tu equipo: Procesador, Memoria RAM, Sistema Operativo y versión de Java (JDK).  
+> * Explicar cómo aislaste la medición con `System.nanoTime()` sin incluir lecturas de teclado ni impresiones por pantalla.  
+> * Explicar la realización de 5 repeticiones por cada tamaño y por qué se toma la **MEDIANA** para descartar el ruido del Garbage Collector.
 
-### 4.3. Tabla de Resultados Experimentales
-> **[TODO MELANY]:**
-> * Insertar la tabla de resultados obtenida de los 5 tamaños evaluados (|V| = 4, 6, 8, 10, 12), incluyendo:
->   - Tamaño (|V| y |E|)
->   - Cobertura mínima k*
->   - Tiempo mediano (en ns y ms)
->   - Memoria estimada (en KB)
->   - Certificado óptimo S*
+### 4.3. Tabla Oficial de Resultados Experimentales
+> **[ESPACIO PARA COMPLETAR POR MELANY]:**  
+> Llenar la siguiente tabla con las mediciones reales de la batería de pruebas (`bateria_benchmarking.csv`):
+
+| Prueba | Entrada / Parámetro (|V|, |E|) | Cobertura Mínima k* | Tiempo Mediano (ms) | Memoria Estimada (KB) | Certificado Óptimo S* |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| **1** | \|V\| = 4, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
+| **2** | \|V\| = 6, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
+| **3** | \|V\| = 8, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
+| **4** | \|V\| = 10, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
+| **5** | \|V\| = 12, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
 
 ### 4.4. Análisis de las Dos Gráficas Obligatorias
-> **[TODO MELANY]:**
-> * **Gráfica 1 (Tamaño de Entrada vs. Tiempo):** Insertar la imagen y explicar la tendencia de crecimiento frente al número de vértices.
-> * **Gráfica 2 (Comparación Antes vs. Después del Cambio Obligatorio):** Insertar la imagen de barras comparando coberturas mínimas y tiempos de cómputo.
+> **[ESPACIO PARA COMPLETAR POR MELANY]:**  
+> * **Gráfica 1 (Tamaño de Entrada frente a Tiempo):** Pegar aquí la imagen de la curva de tiempo vs. número de nodos |V| e interpretar su comportamiento.  
+> * **Gráfica 2 (Comparación Antes vs. Después del Enlace Adicional):** Pegar aquí el gráfico de barras comparando k* y tiempos antes y después del cambio obligatorio e interpretar el resultado.
 
 ---
 
 ## 5. DEMOSTRACIÓN DE CORRECTITUD Y COMPLEJIDAD TEÓRICA
-**Responsable de Redacción:** Carolay (Persona 4)
 
-### 5.1. Demostración Formal de Correctitud
-> **[TODO CAROLAY]:**
-> * Redactar la demostración inductiva sobre el parámetro k:
->   - Caso Base (k = 0): Correctitud cuando E = vacio y cuando E != vacio.
->   - Paso Inductivo (k > 0): Justificar por qué la partición en dos ramas generada por una arista (u, v) no cubierta es exhaustiva y no omite ninguna solución válida.
+**Responsable:** Carolay (Persona 4)
 
-### 5.2. Análisis Fundamentado de Complejidad Temporal T(n)
-> **[TODO CAROLAY]:**
-> * Desarrollar la deducción matemática del peor caso:
->   - Número máximo de nodos en el árbol binario de búsqueda: sum_{i=0}^k 2^i = O(2^k).
->   - Costo de filtrado de aristas en cada nivel: O(|E|).
->   - Cota superior total: T(n) = O(2^k * |E|).
-> * Evitar limitarse a etiquetas Big O: contrastar la diferencia entre algoritmo e instancia (árbol podado vs árbol completo).
+### 5.1. Demostración Formal de Correctitud por Inducción Matemática
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Enunciar formalmente la hipótesis inductiva P(k) sobre el parámetro de presupuesto k.  
+> * Desarrollar el **Caso Base (k = 0)**: demostrar qué ocurre cuando |E| = 0 y cuando |E| > 0.  
+> * Desarrollar el **Paso Inductivo (k > 0)**: justificar por qué una arista no cubierta (u, v) divide exhaustivamente el espacio en las ramas u y v con presupuesto k-1 sin perder ninguna solución válida.
 
-### 5.3. Análisis Fundamentado de Complejidad Espacial S(n)
-> **[TODO CAROLAY]:**
-> * Analizar la memoria ocupada por la pila de llamadas recursivas: profundidad máxima acotada por k <= |V|.
-> * Memoria por marco de activación: O(|E|) para la lista de aristas residuales.
-> * Demostrar que el consumo espacial es estrictamente polinomial: S(n) = O(k * |E|).
+### 5.2. Deducción Fundamentada de la Complejidad Temporal T(n)
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Calcular el número máximo de nodos en el árbol binario de búsqueda: sum_(i=0 a k) 2^i = 2^(k+1) - 1 = O(2^k).  
+> * Multiplicar por el costo de filtrado de aristas por nivel: O(|E|).  
+> * Obtener la cota superior formal: T(n) = O(2^k * |E|).  
+> * Diferenciar entre algoritmo e instancia: explicar cómo los nodos de alto grado generan podas que hacen que en la práctica se exploren muchos menos nodos.
+
+### 5.3. Deducción Fundamentada de la Complejidad Espacial S(n)
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Analizar la profundidad de la pila de recursión (acotada por k <= |V|).  
+> * Demostrar que el consumo de memoria es estrictamente polinomial: S(n) = O(k * |E|) <= O(|V| * |E|), garantizando que el programa no sufra de desbordamiento de memoria (`OutOfMemoryError`).
 
 ---
 
 ## 6. RESPUESTAS OBLIGATORIAS A LAS PREGUNTAS DE ANÁLISIS
-**Responsable de Redacción:** Carolay (Persona 4)
+
+**Responsable:** Carolay (Persona 4)
 
 ### Pregunta 1: ¿Cómo se relaciona el crecimiento observado con T(n) y cuáles son las limitaciones de la medición?
-> **[TODO CAROLAY]:**
-> * Contrastar la curva teórica O(2^k * |E|) frente a los tiempos de milisegundos observados en los experimentos de Melany.
-> * Explicar las limitaciones físicas: sobrecarga del JIT en entradas pequeñas y horizonte intratable para k grande.
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Contrastar la curva teórica O(2^k * |E|) con los tiempos reales obtenidos por Melany en la tabla del benchmarking.  
+> * Explicar las limitaciones de medir con `System.nanoTime()` en instancias muy pequeñas (optimización JIT, resolución del reloj del SO).
 
 ### Pregunta 2: ¿Qué diferencia existe entre encontrar una solución y verificar el certificado correspondiente?
-> **[TODO CAROLAY]:**
-> * Argumentar la asimetría fundamental entre la clase P (verificación lineal O(|V| + |E|)) y los problemas NP-difíciles (búsqueda en espacio combinatorial exponencial).
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Explicar la asimetría computacional entre la dificultad de búsqueda (problema NP-difícil en tiempo exponencial) y la facilidad de verificación (algoritmo en tiempo polinomial lineal O(|V| + |E|)).
 
 ### Pregunta 3: ¿Qué cambió en el resultado o en el costo al modificar la instancia y por qué?
-> **[TODO CAROLAY]:**
-> * Explicar las condiciones geométricas del grafo para que Delta k* sea 0 (cuando un nodo ya cubierto absorbe el enlace) o +1 (cuando une dos nodos desprotegidos).
-> * Analizar el efecto restrictivo de aristas adicionales en la poda del árbol.
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:**  
+> * Explicar bajo qué condiciones geométricas del grafo k* no cambia (Delta k* = 0) y cuándo se incrementa en uno (Delta k* = 1).  
+> * Analizar el efecto de la nueva arista sobre la tasa de poda en el árbol de búsqueda.
 
 ---
 
 ## 7. USO CRÍTICO DE NOTEBOOKLM Y HONESTIDAD ACADÉMICA
-**Responsable de Redacción:** Todo el Equipo (Consolidado por Carolay)
+
+**Responsable:** Todo el Equipo (Consolidado por Carolay)
 
 ### 7.1. Registro de Preguntas y Contraste Bibliográfico
-> **[TODO EQUIPO]:**
-> * Registrar al menos 5 preguntas conceptuales formuladas en el cuaderno de NotebookLM compartido por el docente.
-> * Colocar para cada una la respuesta obtenida y el contraste con fuentes académicas (Cormen, Karp, Garey & Johnson).
+> **[ESPACIO PARA COMPLETAR POR EL EQUIPO]:**  
+> Registrar en la tabla al menos 5 preguntas conceptuales realizadas en el cuaderno compartido de NotebookLM, la síntesis de la respuesta y la fuente académica (Cormen, Karp, etc.) con la que se contrastó:
 
-### 7.2. Reflexión Grupal (150 a 200 palabras)
-> **[TODO EQUIPO]:**
-> * Redactar una reflexión crítica de autoría grupal (estrictamente entre 150 y 200 palabras) sobre:
->   - El rol de la IA generativa como apoyo conceptual frente a la autoría y razonamiento del código propio.
->   - El aprendizaje obtenido sobre complejidad computacional y verificación polinomial.
+| # | Pregunta Conceptual en NotebookLM | Síntesis de la Respuesta | Fuente Académica de Contraste |
+|:---:|---|---|---|
+| **1** | *[Pregunta 1]* | *[Respuesta]* | *[Libro / Paper de referencia]* |
+| **2** | *[Pregunta 2]* | *[Respuesta]* | *[Libro / Paper de referencia]* |
+| **3** | *[Pregunta 3]* | *[Respuesta]* | *[Libro / Paper de referencia]* |
+| **4** | *[Pregunta 4]* | *[Respuesta]* | *[Libro / Paper de referencia]* |
+| **5** | *[Pregunta 5]* | *[Respuesta]* | *[Libro / Paper de referencia]* |
+
+### 7.2. Reflexión Grupal sobre Honestidad Académica (150 a 200 palabras)
+> **[ESPACIO PARA REDACTAR POR EL EQUIPO]:**  
+> Redactar aquí una reflexión ética de autoría grupal (estrictamente entre 150 y 200 palabras) sobre el rol de la IA generativa como asistente conceptual frente a la autoría real y dominio del código implementado en Java.
 
 ---
 
 ## 8. CONCLUSIONES Y RECOMENDACIONES
-**Responsables:** Los 4 Integrantes
 
-> **[TODO EQUIPO]:**
-> * Redactar 4 conclusiones técnicas fundamentadas (una enfocada en modelado por Karina, una en verificación y pruebas por Eduardo, una en benchmarking por Melany, y una en complejidad teórica por Carolay).
-> * Redactar 2 recomendaciones de diseño e investigación futura.
+**Responsable:** Todo el Equipo (Una conclusión por integrante)
+
+> **[ESPACIO PARA COMPLETAR POR KARINA]:** Conclusión técnica enfocada en el modelado formal y el algoritmo exacto.  
+> **[ESPACIO PARA COMPLETAR POR EDUARDO]:** Conclusión técnica enfocada en el verificador en tiempo lineal y las pruebas.  
+> **[ESPACIO PARA COMPLETAR POR MELANY]:** Conclusión técnica enfocada en el benchmarking y la variación del nuevo enlace.  
+> **[ESPACIO PARA COMPLETAR POR CAROLAY]:** Conclusión técnica enfocada en la complejidad teórica y la correctitud.  
+> **[ESPACIO PARA COMPLETAR POR EL EQUIPO]:** 2 recomendaciones para trabajos futuros o extensiones del problema.
 
 ---
 
-## 9. REFERENCIAS BIBLIOGRÁFICAS
-> **[TODO EQUIPO]:**
-> * Incluir las referencias en formato IEEE / APA:
->   1. Cormen, T. H. et al. (2022). Introduction to Algorithms. MIT Press.
->   2. Karp, R. M. (1972). Reducibility among Combinatorial Problems.
->   3. Cygan, M. et al. (2015). Parameterized Algorithms. Springer.
->   4. Documentación oficial de Java SE (Oracle) sobre System.nanoTime().
+## 9. REFERENCIAS BIBLIOGRÁFICAS (FORMATO IEEE)
+
+> **[ESPACIO PARA COMPLETAR POR EL EQUIPO]:**  
+> Incluir las referencias bibliográficas en formato estándar IEEE (Cormen, Karp, documentación de Java, etc.).
