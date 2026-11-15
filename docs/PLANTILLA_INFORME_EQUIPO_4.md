@@ -114,16 +114,45 @@
 > * Explicar el manejo de errores (nodos fuera de rango, formato numérico) y el mensaje al usuario cuando una instancia no tiene solución.
 
 ### 3.4. Suite de Pruebas Funcionales y Casos Límite
-> **[ESPACIO PARA COMPLETAR POR EDUARDO]:**  
-> Llenar la tabla con los resultados obtenidos al ejecutar las 5 pruebas de `SuitePruebasFuncionales.java` y pegar capturas de la terminal:
 
-| Caso de Prueba | Topología de la Red | Parámetros (|V|, |E|, k) | Salida Esperada | Resultado Obtenido | Estado |
-|---|---|---|---|---|:---:|
-| **1. Grafo Vacío** | 4 nodos aislados (sin enlaces) | \|V\|=4, \|E\|=0, k=0 | SÍ, S = [ ] | *[Pegar resultado]* | PASÓ ✅ |
-| **2. Grafo Estrella** | Centro 0 conectado a 4 nodos | \|V\|=5, \|E\|=4, k=1 | SÍ, S = [0] | *[Pegar resultado]* | PASÓ ✅ |
-| **3. Ciclo Impar C5** | Ciclo cerrado de 5 nodos | \|V\|=5, \|E\|=5, k=2 / k=3 | k=2: NO; k=3: SÍ | *[Pegar resultado]* | PASÓ ✅ |
-| **4. Grafo Completo K4** | 4 nodos todos contra todos | \|V\|=4, \|E\|=6, k=2 / k=3 | k=2: NO; k=3: SÍ | *[Pegar resultado]* | PASÓ ✅ |
-| **5. Antifraude** | Certificado incompleto o inválido | \|V\|=3, \|E\|=2, k=1, S=[0] | INVÁLIDO (rechazado) | *[Pegar resultado]* | PASÓ ✅ |
+**Responsable:** Eduardo (Persona 2)
+
+A continuación, documentar la ejecución de los 5 casos de prueba obligatorios de `SuitePruebasFuncionales.java`. En cada caso se debe registrar la salida real de la terminal de VS Code:
+
+#### Caso de Prueba 1: Grafo Vacío (Caso Límite)
+* **Topología:** Red de 4 nodos aislados sin ningún enlace (V = 4, E = 0). Presupuesto: k = 0.
+* **Resultado Teórico Esperado:** SÍ (true), con certificado vacío S = [ ].
+* **Salida de Consola / Captura:**  
+  *[Pegar aquí la salida de la terminal de VS Code]*
+* **Veredicto:** APROBADO ✅
+
+#### Caso de Prueba 2: Grafo Estrella K_(1,4)
+* **Topología:** Nodo central 0 conectado a 4 nodos periféricos (V = 5, E = 4). Presupuesto: k = 1.
+* **Resultado Teórico Esperado:** SÍ (true), con sensor único en el nodo central S = [0].
+* **Salida de Consola / Captura:**  
+  *[Pegar aquí la salida de la terminal de VS Code]*
+* **Veredicto:** APROBADO ✅
+
+#### Caso de Prueba 3: Grafo Ciclo Impar C_5
+* **Topología:** Anillo cerrado de 5 routers (V = 5, E = 5).
+* **Resultado Teórico Esperado:** Con k = 2 responde NO (false). Con k = 3 responde SÍ (true) con S = [0, 2, 3].
+* **Salida de Consola / Captura:**  
+  *[Pegar aquí la salida de la terminal de VS Code]*
+* **Veredicto:** APROBADO ✅
+
+#### Caso de Prueba 4: Grafo Completo K_4 (Caso Límite)
+* **Topología:** 4 routers interconectados todos entre sí con 6 enlaces (V = 4, E = 6).
+* **Resultado Teórico Esperado:** Requiere n - 1 = 3 sensores. Con k = 2 responde NO (false) y con k = 3 responde SÍ (true).
+* **Salida de Consola / Captura:**  
+  *[Pegar aquí la salida de la terminal de VS Code]*
+* **Veredicto:** APROBADO ✅
+
+#### Caso de Prueba 5: Detección y Rechazo Antifraude
+* **Topología:** Red de 3 nodos (0-1 y 1-2). Presupuesto k = 1. Certificado enviado: S = [0].
+* **Resultado Teórico Esperado:** El verificador debe rechazarlo (INVÁLIDO / false) e identificar que el enlace (1, 2) quedó desprotegido.
+* **Salida de Consola / Captura:**  
+  *[Pegar aquí la salida de la terminal de VS Code]*
+* **Veredicto:** APROBADO ✅
 
 ---
 
@@ -144,16 +173,18 @@
 > * Explicar la realización de 5 repeticiones por cada tamaño y por qué se toma la **MEDIANA** para descartar el ruido del Garbage Collector.
 
 ### 4.3. Tabla Oficial de Resultados Experimentales
-> **[ESPACIO PARA COMPLETAR POR MELANY]:**  
-> Llenar la siguiente tabla con las mediciones reales de la batería de pruebas (`bateria_benchmarking.csv`):
 
-| Prueba | Entrada / Parámetro (|V|, |E|) | Cobertura Mínima k* | Tiempo Mediano (ms) | Memoria Estimada (KB) | Certificado Óptimo S* |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| **1** | \|V\| = 4, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
-| **2** | \|V\| = 6, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
-| **3** | \|V\| = 8, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
-| **4** | \|V\| = 10, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
-| **5** | \|V\| = 12, \|E\| = *[Llenar]* | k* = *[Llenar]* | *[Llenar ms]* | *[Llenar KB]* | *[Nodos]* |
+**Responsable:** Melany (Persona 3)
+
+Llenar los valores medidos en la batería de pruebas (`bateria_benchmarking.csv`) sobre los 5 tamaños de red evaluados:
+
+| N° Prueba | Entrada / Tamaño de Red | Cobertura Óptima k* | Tiempo Mediano (ms) | Memoria Estimada (KB) | Certificado Testigo S* |
+|:---:|---|:---:|:---:|:---:|---|
+| **1** | V = 4 nodos, E = 3 enlaces | k* = [Llenar] | [Llenar ms] | [Llenar KB] | S* = [Nodos elegidos] |
+| **2** | V = 6 nodos, E = 5 enlaces | k* = [Llenar] | [Llenar ms] | [Llenar KB] | S* = [Nodos elegidos] |
+| **3** | V = 8 nodos, E = 8 enlaces | k* = [Llenar] | [Llenar ms] | [Llenar KB] | S* = [Nodos elegidos] |
+| **4** | V = 10 nodos, E = 12 enlaces | k* = [Llenar] | [Llenar ms] | [Llenar KB] | S* = [Nodos elegidos] |
+| **5** | V = 12 nodos, E = 16 enlaces | k* = [Llenar] | [Llenar ms] | [Llenar KB] | S* = [Nodos elegidos] |
 
 ### 4.4. Análisis de las Dos Gráficas Obligatorias
 > **[ESPACIO PARA COMPLETAR POR MELANY]:**  
