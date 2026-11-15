@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Ejecutar Proyecto EDA II (Main)",
+            "request": "launch",
+            "mainClass": "ec.edu.epn.eda2.Main",
+            "projectName": "Proyecto_EDA2_VertexCover"
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+# Binaries and compiled classes
+bin/
+*.class
+
+# macOS metadata
+.DS_Store
+
+# IDE configs (keep .vscode for team shared settings)
+.idea/
+*.iml
+*.log
