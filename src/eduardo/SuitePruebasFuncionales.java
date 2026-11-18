@@ -7,21 +7,8 @@ import model.ResultadoSolucion;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ============================================================================
- * CLASE DE: EDUARDO (Persona 2)
- * ROL ASIGNADO: Suite de 5 pruebas funcionales automáticas y casos límite
- * ============================================================================
- *
- * Ejecuta y valida automáticamente los 5 casos de prueba obligatorios requeridos
- * por la rúbrica del proyecto, contrastando la solución del algoritmo exacto
- * con la certificación del Verificador Independiente.
- */
 public class SuitePruebasFuncionales {
 
-    /**
-     * Ejecuta todas las pruebas funcionales en serie e imprime el reporte consolidado.
-     */
     public void ejecutarPruebas() {
         System.out.println("==========================================================================");
         System.out.println("   SUITE DE PRUEBAS FUNCIONALES Y CASOS LÍMITE (EDUARDO)                  ");
@@ -50,11 +37,6 @@ public class SuitePruebasFuncionales {
         System.out.println("==========================================================================\n");
     }
 
-    /**
-     * Caso Límite 1: Grafo sin aristas (nodos aislados).
-     * Configuración: |V| = 4, |E| = 0, k = 0.
-     * Resultado esperado: SÍ, certificado vacío S = [].
-     */
     public boolean prueba1GrafoSinAristas(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         System.out.println("\n[PRUEBA 1]: Caso Límite - Grafo sin aristas (|V|=4, |E|=0, k=0)");
         Grafo g = new Grafo(4);
@@ -72,11 +54,6 @@ public class SuitePruebasFuncionales {
         }
     }
 
-    /**
-     * Caso 2: Grafo estrella K_{1,4}.
-     * Configuración: 5 nodos, centro en 0 conectado a 1, 2, 3, 4. Presupuesto k = 1.
-     * Resultado esperado: SÍ, certificado S = [0] con tamaño 1.
-     */
     public boolean prueba2GrafoEstrella(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         System.out.println("\n[PRUEBA 2]: Topología Estrella K_{1,4} (|V|=5, |E|=4, hub=0, k=1)");
         Grafo g = new Grafo(5);
@@ -99,11 +76,6 @@ public class SuitePruebasFuncionales {
         }
     }
 
-    /**
-     * Caso 3: Grafo ciclo impar C_5.
-     * Configuración: 5 nodos en anillo (0-1-2-3-4-0).
-     * Resultado esperado: k = 2 responde NO; k = 3 responde SÍ.
-     */
     public boolean prueba3GrafoCicloImpar(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         System.out.println("\n[PRUEBA 3]: Ciclo Impar C_5 (|V|=5, |E|=5, k=2 da NO, k=3 da SÍ)");
         Grafo g = new Grafo(5);
@@ -130,11 +102,6 @@ public class SuitePruebasFuncionales {
         }
     }
 
-    /**
-     * Caso Límite 4: Grafo completo K_4.
-     * Configuración: 4 nodos todos conectados con todos (6 aristas).
-     * Resultado esperado: Requiere n - 1 = 3 sensores. Con k = 2 da NO; con k = 3 da SÍ.
-     */
     public boolean prueba4GrafoCompleto(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
         System.out.println("\n[PRUEBA 4]: Caso Límite - Grafo Completo K_4 (|V|=4, |E|=6, k=2 da NO, k=3 da SÍ)");
         Grafo g = new Grafo(4);
@@ -162,23 +129,17 @@ public class SuitePruebasFuncionales {
         }
     }
 
-    /**
-     * Caso 5: Detección y rechazo de certificado inválido / fraudulento.
-     * Resultado esperado: El verificador debe retornar false e identificar aristas libres.
-     */
     public boolean prueba5CertificadoInvalido(VerificadorIndependiente verif) {
         System.out.println("\n[PRUEBA 5]: Control Antifraude - Detección de Certificado Incompleto");
         Grafo g = new Grafo(3);
         g.agregarArista(0, 1);
         g.agregarArista(1, 2);
 
-        // Certificado insuficiente: solo nodo 0 (la arista (1,2) queda descubierta)
         List<Integer> certificadoIncompleto = new ArrayList<>();
         certificadoIncompleto.add(0);
 
         boolean rechazadoIncompleto = !verif.verificarCertificado(g, 1, certificadoIncompleto, false);
 
-        // Certificado que excede presupuesto: 3 nodos con presupuesto k = 1
         List<Integer> certificadoExcedido = new ArrayList<>();
         certificadoExcedido.add(0);
         certificadoExcedido.add(1);

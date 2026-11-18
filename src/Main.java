@@ -68,7 +68,7 @@ public class Main {
 
             switch (opcion) {
                 case "1":
-                    System.out.println("--- INGRESO MANUAL DE RED POR CONSOLA (EDUARDO) ---");
+                    System.out.println("--- INGRESO MANUAL DE RED POR CONSOLA ---");
                     try {
                         System.out.print("Ingrese el número de routers / nodos (|V| >= 1): ");
                         int n = Integer.parseInt(scanner.nextLine().trim());
