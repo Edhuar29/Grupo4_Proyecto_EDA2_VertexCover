@@ -171,14 +171,13 @@ public class Main {
                     /*
                      * TODO: Ejecutar el cálculo matemático de cotas teóricas de Carolay:
                      */
-                    System.out.println("-> Opción 10 seleccionada: Modelado de complejidad teórica de Carolay.");
+                    int kAnalisis = kActual > 0 ? kActual : 2;
                     int aristas = redActual != null ? redActual.getNumAristas() : 4;
-                    analisisCarolay.calcularOperacionesTeoricasMaximas(kActual > 0 ? kActual : 2, aristas);
-                    analisisCarolay.calcularMemoriaTeoricaPila(kActual > 0 ? kActual : 2, aristas);
-                    analisisCarolay.imprimirComparativaTeoricaVsEmpirica(
-                            ultimoResultado != null ? ultimoResultado.getTiempoNano() : 0,
-                            kActual > 0 ? kActual : 2, aristas);
-                    break;
+                    int vertices = redActual != null ? redActual.getNumVertices() : 4;
+                    analisisCarolay.mostrarAnalisisTeorico(kAnalisis, vertices, aristas,
+                        ultimoResultado != null ? ultimoResultado.getTiempoNano() : 0,
+                        solverKarina.getNodosExplorados());
+                break;
 
                 case "0":
                     salir = true;
