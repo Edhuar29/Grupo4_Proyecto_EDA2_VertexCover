@@ -1,7 +1,4 @@
 package carolay;
-
-package carolay;
-
 /**
  * Cotas teóricas de tiempo T(n) y espacio S(n) del algoritmo exacto de Vertex Cover
  * (k = presupuesto, |V| = vértices, |E| = aristas).
