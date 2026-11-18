@@ -1,6 +1,11 @@
 package eduardo;
 
 import karina.AlgoritmoExactoVertexCover;
+import model.Grafo;
+import model.ResultadoSolucion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ============================================================================
@@ -8,14 +13,14 @@ import karina.AlgoritmoExactoVertexCover;
  * ROL ASIGNADO: Suite de 5 pruebas funcionales automáticas y casos límite
  * ============================================================================
  *
- * INSTRUCCIONES PARA EDUARDO:
- * Debes programar y ejecutar los 5 casos de prueba obligatorios requeridos por la guía,
- * comprobando que el algoritmo de Karina y tu Verificador den la respuesta esperada.
+ * Ejecuta y valida automáticamente los 5 casos de prueba obligatorios requeridos
+ * por la rúbrica del proyecto, contrastando la solución del algoritmo exacto
+ * con la certificación del Verificador Independiente.
  */
 public class SuitePruebasFuncionales {
 
     /**
-     * Ejecuta todas las pruebas funcionales en serie e imprime el reporte.
+     * Ejecuta todas las pruebas funcionales en serie e imprime el reporte consolidado.
      */
     public void ejecutarPruebas() {
         System.out.println("==========================================================================");
@@ -25,11 +30,24 @@ public class SuitePruebasFuncionales {
         AlgoritmoExactoVertexCover solverKarina = new AlgoritmoExactoVertexCover();
         VerificadorIndependiente verificador = new VerificadorIndependiente();
 
-        prueba1GrafoSinAristas(solverKarina, verificador);
-        prueba2GrafoEstrella(solverKarina, verificador);
-        prueba3GrafoCicloImpar(solverKarina, verificador);
-        prueba4GrafoCompleto(solverKarina, verificador);
-        prueba5CertificadoInvalido(verificador);
+        int pruebasPasadas = 0;
+        int totalPruebas = 5;
+
+        if (prueba1GrafoSinAristas(solverKarina, verificador)) pruebasPasadas++;
+        if (prueba2GrafoEstrella(solverKarina, verificador)) pruebasPasadas++;
+        if (prueba3GrafoCicloImpar(solverKarina, verificador)) pruebasPasadas++;
+        if (prueba4GrafoCompleto(solverKarina, verificador)) pruebasPasadas++;
+        if (prueba5CertificadoInvalido(verificador)) pruebasPasadas++;
+
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println(">> REPORTE FINAL: " + pruebasPasadas + "/" + totalPruebas + " pruebas aprobadas ("
+                + (pruebasPasadas * 100 / totalPruebas) + "% de éxito).");
+        if (pruebasPasadas == totalPruebas) {
+            System.out.println(">> ESTADO: Todas las pruebas funcionales y de auditoría pasaron con éxito.");
+        } else {
+            System.out.println(">> ESTADO: Se detectaron discrepancias en alguna prueba.");
+        }
+        System.out.println("==========================================================================\n");
     }
 
     /**
@@ -37,47 +55,79 @@ public class SuitePruebasFuncionales {
      * Configuración: |V| = 4, |E| = 0, k = 0.
      * Resultado esperado: SÍ, certificado vacío S = [].
      */
-    public void prueba1GrafoSinAristas(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
-        /*
-         * TODO EDUARDO:
-         * model.Grafo g = new model.Grafo(4); // sin aristas
-         * model.ResultadoSolucion res = solver.resolverDecision(g, 0);
-         * Validar si res.isTieneSolucion() == true y res.getCertificado().isEmpty().
-         */
-        System.out.println("-> Prueba 1 (Grafo sin aristas): pendiente de codificar por Eduardo.");
+    public boolean prueba1GrafoSinAristas(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
+        System.out.println("\n[PRUEBA 1]: Caso Límite - Grafo sin aristas (|V|=4, |E|=0, k=0)");
+        Grafo g = new Grafo(4);
+        ResultadoSolucion res = solver.resolverDecision(g, 0);
+
+        boolean okAlgoritmo = res.isTieneSolucion() && res.getCertificado().isEmpty();
+        boolean okVerificador = verif.verificarCertificado(g, 0, res.getCertificado(), false);
+
+        if (okAlgoritmo && okVerificador) {
+            System.out.println("  -> [PASÓ]: Decisión SÍ, Testigo S=[], Verificador confirmó validez.");
+            return true;
+        } else {
+            System.out.println("  -> [FALLÓ]: Algoritmo o Verificador no respondieron lo esperado.");
+            return false;
+        }
     }
 
     /**
      * Caso 2: Grafo estrella K_{1,4}.
      * Configuración: 5 nodos, centro en 0 conectado a 1, 2, 3, 4. Presupuesto k = 1.
-     * Resultado esperado: SÍ, certificado S = [0].
+     * Resultado esperado: SÍ, certificado S = [0] con tamaño 1.
      */
-    public void prueba2GrafoEstrella(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
-        /*
-         * TODO EDUARDO:
-         * model.Grafo g = new model.Grafo(5);
-         * g.agregarArista(0, 1); g.agregarArista(0, 2); g.agregarArista(0, 3); g.agregarArista(0, 4);
-         * model.ResultadoSolucion res = solver.resolverDecision(g, 1);
-         * Validar si res.isTieneSolucion() == true y contiene el nodo central 0.
-         */
-        System.out.println("-> Prueba 2 (Grafo estrella): pendiente de codificar por Eduardo.");
+    public boolean prueba2GrafoEstrella(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
+        System.out.println("\n[PRUEBA 2]: Topología Estrella K_{1,4} (|V|=5, |E|=4, hub=0, k=1)");
+        Grafo g = new Grafo(5);
+        g.agregarArista(0, 1);
+        g.agregarArista(0, 2);
+        g.agregarArista(0, 3);
+        g.agregarArista(0, 4);
+
+        ResultadoSolucion res = solver.resolverDecision(g, 1);
+        boolean okAlgoritmo = res.isTieneSolucion() && res.getCertificado().size() == 1 
+                && res.getCertificado().contains(0);
+        boolean okVerificador = verif.verificarCertificado(g, 1, res.getCertificado(), false);
+
+        if (okAlgoritmo && okVerificador) {
+            System.out.println("  -> [PASÓ]: Decisión SÍ, Testigo S=[0], Verificador confirmó cobertura total.");
+            return true;
+        } else {
+            System.out.println("  -> [FALLÓ]: La topología estrella no fue resuelta o verificada adecuadamente.");
+            return false;
+        }
     }
 
     /**
      * Caso 3: Grafo ciclo impar C_5.
-     * Configuración: 5 nodos en ciclo (0-1-2-3-4-0).
-     * Resultado esperado: k = 2 debe dar NO; k = 3 debe dar SÍ.
+     * Configuración: 5 nodos en anillo (0-1-2-3-4-0).
+     * Resultado esperado: k = 2 responde NO; k = 3 responde SÍ.
      */
-    public void prueba3GrafoCicloImpar(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
-        /*
-         * TODO EDUARDO:
-         * model.Grafo g = new model.Grafo(5);
-         * g.agregarArista(0, 1); g.agregarArista(1, 2); g.agregarArista(2, 3);
-         * g.agregarArista(3, 4); g.agregarArista(4, 0);
-         * Probar con k = 2 (debe dar false).
-         * Probar con k = 3 (debe dar true).
-         */
-        System.out.println("-> Prueba 3 (Ciclo impar C5): pendiente de codificar por Eduardo.");
+    public boolean prueba3GrafoCicloImpar(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
+        System.out.println("\n[PRUEBA 3]: Ciclo Impar C_5 (|V|=5, |E|=5, k=2 da NO, k=3 da SÍ)");
+        Grafo g = new Grafo(5);
+        g.agregarArista(0, 1);
+        g.agregarArista(1, 2);
+        g.agregarArista(2, 3);
+        g.agregarArista(3, 4);
+        g.agregarArista(4, 0);
+
+        ResultadoSolucion resK2 = solver.resolverDecision(g, 2);
+        ResultadoSolucion resK3 = solver.resolverDecision(g, 3);
+
+        boolean okK2 = !resK2.isTieneSolucion();
+        boolean okK3 = resK3.isTieneSolucion() && resK3.getCertificado().size() <= 3;
+        boolean okVerificador = verif.verificarCertificado(g, 3, resK3.getCertificado(), false);
+
+        if (okK2 && okK3 && okVerificador) {
+            System.out.println("  -> [PASÓ]: k=2 respondió NO; k=3 respondió SÍ con testigo " 
+                    + resK3.getCertificado() + ", validado por verificador.");
+            return true;
+        } else {
+            System.out.println("  -> [FALLÓ]: El ciclo impar C_5 no discriminó adecuadamente k=2 vs k=3.");
+            return false;
+        }
     }
 
     /**
@@ -85,30 +135,63 @@ public class SuitePruebasFuncionales {
      * Configuración: 4 nodos todos conectados con todos (6 aristas).
      * Resultado esperado: Requiere n - 1 = 3 sensores. Con k = 2 da NO; con k = 3 da SÍ.
      */
-    public void prueba4GrafoCompleto(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
-        /*
-         * TODO EDUARDO:
-         * model.Grafo g = new model.Grafo(4);
-         * Conectar todos los pares (0,1), (0,2), (0,3), (1,2), (1,3), (2,3).
-         * Con k = 2 debe dar false; con k = 3 debe dar true.
-         */
-        System.out.println("-> Prueba 4 (Grafo completo K4): pendiente de codificar por Eduardo.");
+    public boolean prueba4GrafoCompleto(AlgoritmoExactoVertexCover solver, VerificadorIndependiente verif) {
+        System.out.println("\n[PRUEBA 4]: Caso Límite - Grafo Completo K_4 (|V|=4, |E|=6, k=2 da NO, k=3 da SÍ)");
+        Grafo g = new Grafo(4);
+        g.agregarArista(0, 1);
+        g.agregarArista(0, 2);
+        g.agregarArista(0, 3);
+        g.agregarArista(1, 2);
+        g.agregarArista(1, 3);
+        g.agregarArista(2, 3);
+
+        ResultadoSolucion resK2 = solver.resolverDecision(g, 2);
+        ResultadoSolucion resK3 = solver.resolverDecision(g, 3);
+
+        boolean okK2 = !resK2.isTieneSolucion();
+        boolean okK3 = resK3.isTieneSolucion() && resK3.getCertificado().size() == 3;
+        boolean okVerificador = verif.verificarCertificado(g, 3, resK3.getCertificado(), false);
+
+        if (okK2 && okK3 && okVerificador) {
+            System.out.println("  -> [PASÓ]: k=2 respondió NO; k=3 respondió SÍ con n-1=3 nodos (" 
+                    + resK3.getCertificado() + ").");
+            return true;
+        } else {
+            System.out.println("  -> [FALLÓ]: El grafo completo K_4 no requirió exactamente n-1 sensores.");
+            return false;
+        }
     }
 
     /**
      * Caso 5: Detección y rechazo de certificado inválido / fraudulento.
      * Resultado esperado: El verificador debe retornar false e identificar aristas libres.
      */
-    public void prueba5CertificadoInvalido(VerificadorIndependiente verif) {
-        /*
-         * TODO EDUARDO:
-         * model.Grafo g = new model.Grafo(3);
-         * g.agregarArista(0, 1); g.agregarArista(1, 2);
-         * java.util.List<Integer> certificadoMalo = new java.util.ArrayList<>();
-         * certificadoMalo.add(0); // Falta el nodo 1 o 2 para cubrir la arista (1, 2)
-         * boolean valido = verif.verificarCertificado(g, 1, certificadoMalo);
-         * Comprobar que 'valido' sea false.
-         */
-        System.out.println("-> Prueba 5 (Certificado inválido): pendiente de codificar por Eduardo.");
+    public boolean prueba5CertificadoInvalido(VerificadorIndependiente verif) {
+        System.out.println("\n[PRUEBA 5]: Control Antifraude - Detección de Certificado Incompleto");
+        Grafo g = new Grafo(3);
+        g.agregarArista(0, 1);
+        g.agregarArista(1, 2);
+
+        // Certificado insuficiente: solo nodo 0 (la arista (1,2) queda descubierta)
+        List<Integer> certificadoIncompleto = new ArrayList<>();
+        certificadoIncompleto.add(0);
+
+        boolean rechazadoIncompleto = !verif.verificarCertificado(g, 1, certificadoIncompleto, false);
+
+        // Certificado que excede presupuesto: 3 nodos con presupuesto k = 1
+        List<Integer> certificadoExcedido = new ArrayList<>();
+        certificadoExcedido.add(0);
+        certificadoExcedido.add(1);
+        certificadoExcedido.add(2);
+
+        boolean rechazadoExcedido = !verif.verificarCertificado(g, 1, certificadoExcedido, false);
+
+        if (rechazadoIncompleto && rechazadoExcedido) {
+            System.out.println("  -> [PASÓ]: El verificador rechazó con éxito certificados incompletos y con sobrepresupuesto.");
+            return true;
+        } else {
+            System.out.println("  -> [FALLÓ]: El verificador aceptó erróneamente un certificado fraudulento.");
+            return false;
+        }
     }
 }
