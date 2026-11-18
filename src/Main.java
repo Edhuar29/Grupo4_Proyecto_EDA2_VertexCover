@@ -194,7 +194,7 @@ public class Main {
 
                 case "8":
                     System.out.println("-> Opción 8 seleccionada: Ejecutar batería de benchmarking (Melany).");
-                    benchmarkMelany.ejecutarBateriaCompleta(solverKarina, 3);
+                    benchmarkMelany.ejecutarBateriaCompleta(solverKarina, 5);
                     break;
 
                 case "9":
