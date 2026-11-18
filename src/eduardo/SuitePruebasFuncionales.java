@@ -11,7 +11,7 @@ public class SuitePruebasFuncionales {
 
     public void ejecutarPruebas() {
         System.out.println("==========================================================================");
-        System.out.println("   SUITE DE PRUEBAS FUNCIONALES Y CASOS LÍMITE (EDUARDO)                  ");
+        System.out.println("   SUITE DE PRUEBAS FUNCIONALES Y CASOS LÍMITE                            ");
         System.out.println("==========================================================================");
 
         AlgoritmoExactoVertexCover solverKarina = new AlgoritmoExactoVertexCover();
