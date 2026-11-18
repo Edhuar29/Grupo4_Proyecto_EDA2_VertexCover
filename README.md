@@ -1,7 +1,7 @@
 # Plantilla Oficial — Proyecto Integrador EDA II (2026-B)
 ## Equipo 4: Vertex Cover (Ubicación de Sensores sobre Enlaces de Red)
 
-### 👥 Integrantes y Roles Asignados
+###  Integrantes y Roles Asignados
 * **Persona 1: Karina** (`src/karina/`)
   * Modelado matemático formal (entradas, salidas, restricciones, parámetro $k$).
   * Pseudocódigo del algoritmo exacto y prueba de escritorio manual.
@@ -27,7 +27,7 @@
 
 ---
 
-### 💻 Cómo compilar y ejecutar en VS Code o Terminal
+### Cómo compilar y ejecutar en VS Code o Terminal
 Desde la raíz del proyecto:
 
 1. **Compilar:**
