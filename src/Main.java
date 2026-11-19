@@ -4,6 +4,7 @@ import eduardo.VerificadorIndependiente;
 import karina.AlgoritmoExactoVertexCover;
 import melany.BateriaBenchmarking;
 import melany.ModificadorInstanciaRed;
+import model.Arista;
 import model.Grafo;
 import model.ResultadoSolucion;
 
@@ -45,7 +46,8 @@ public class Main {
         boolean salir = false;
 
         while (!salir) {
-            System.out.println("\n==========================================================================");
+            limpiarPantalla();
+            System.out.println("==========================================================================");
             System.out.println("   PROYECTO INTEGRADOR EDA II: VERTEX COVER (EQUIPO 4)                   ");
             System.out.println("   Integrantes: Karina (P1), Eduardo (P2), Melany (P3), Carolay (P4)      ");
             System.out.println("==========================================================================");
@@ -64,46 +66,125 @@ public class Main {
             System.out.print("Seleccione una opción: ");
 
             String opcion = scanner.nextLine().trim();
-            System.out.println();
+
+            if (!opcion.equals("0")) {
+                limpiarPantalla();
+            }
 
             switch (opcion) {
                 case "1":
-                    System.out.println("--- INGRESO MANUAL DE RED POR CONSOLA ---");
+                    System.out.println("==========================================================================");
+                    System.out.println("   OPCIÓN 1: INGRESO MANUAL DE RED POR CONSOLA (EDUARDO)                  ");
+                    System.out.println("==========================================================================");
                     try {
-                        System.out.print("Ingrese el número de routers / nodos (|V| >= 1): ");
+                        System.out.print("  • Número de routers / nodos (|V| >= 1): ");
                         int n = Integer.parseInt(scanner.nextLine().trim());
                         if (n <= 0) {
-                            System.out.println("Error: El número de nodos debe ser mayor a 0.");
+                            System.out.println("\n[ERROR] El número de nodos debe ser mayor a 0.");
+                            System.out.println("==========================================================================\n");
                             break;
                         }
                         redActual = new Grafo(n);
-                        System.out.print("Ingrese el número de enlaces físicos (|E| >= 0): ");
-                        int m = Integer.parseInt(scanner.nextLine().trim());
+                        long maxEnlaces = (long) n * (n - 1) / 2;
+                        int m = 0;
+
+                        if (n == 1) {
+                            System.out.println("  -> Red de 1 router: 0 enlaces físicos asignados automáticamente.");
+                            m = 0;
+                        } else {
+                            while (true) {
+                                System.out.print("  • Número de enlaces físicos (|E|, máx. " + maxEnlaces + "): ");
+                                String inputM = scanner.nextLine().trim();
+                                try {
+                                    m = Integer.parseInt(inputM);
+                                    if (m < 0) {
+                                        System.out.println("    [!] El número de enlaces no puede ser negativo. Intente nuevamente.");
+                                        continue;
+                                    }
+                                    if (m > maxEnlaces) {
+                                        System.out.println("    [!] Máximo " + maxEnlaces + " enlaces permitidos para " + n + " routers. Intente nuevamente.");
+                                        continue;
+                                    }
+                                    break;
+                                } catch (NumberFormatException e) {
+                                    System.out.println("    [!] Ingrese un número entero válido.");
+                                }
+                            }
+                        }
+
+                        if (m > 0) {
+                            System.out.println("\n  --- Ingrese los enlaces físicos (ejemplo: 0 1) ---");
+                        }
                         for (int i = 0; i < m; i++) {
-                            System.out.print("Enlace " + (i + 1) + " (formato: u v): ");
+                            System.out.print("    Enlace " + (i + 1) + " (u v): ");
                             String lineaArista = scanner.nextLine().trim();
                             String[] partes = lineaArista.split("\\s+");
                             if (partes.length < 2) {
-                                System.out.println("Formato incorrecto. Debe ingresar dos enteros separados por espacio.");
+                                System.out.println("    [!] Formato incorrecto. Ingrese dos enteros separados por espacio.");
                                 i--;
                                 continue;
                             }
-                            int u = Integer.parseInt(partes[0]);
-                            int v = Integer.parseInt(partes[1]);
+                            int u;
+                            int v;
+                            try {
+                                u = Integer.parseInt(partes[0]);
+                                v = Integer.parseInt(partes[1]);
+                            } catch (NumberFormatException e) {
+                                System.out.println("    [!] Ingrese números enteros válidos.");
+                                i--;
+                                continue;
+                            }
                             if (u < 0 || u >= n || v < 0 || v >= n) {
-                                System.out.println("Nodos fuera de rango [0, " + (n - 1) + "]. Reintente este enlace.");
+                                System.out.println("    [!] Nodos fuera de rango [0, " + (n - 1) + "]. Reintente este enlace.");
+                                i--;
+                                continue;
+                            }
+                            if (u == v) {
+                                System.out.println("    [!] No se permiten enlaces de un nodo consigo mismo. Reintente.");
+                                i--;
+                                continue;
+                            }
+                            boolean repetido = false;
+                            for (Arista a : redActual.getAristas()) {
+                                if ((a.getU() == u && a.getV() == v) || (a.getU() == v && a.getV() == u)) {
+                                    repetido = true;
+                                    break;
+                                }
+                            }
+                            if (repetido) {
+                                System.out.println("    [!] Enlace repetido o ya existente entre " + u + " y " + v + ". Reintente.");
                                 i--;
                                 continue;
                             }
                             redActual.agregarArista(u, v);
                         }
-                        System.out.print("Ingrese el presupuesto de sensores k (>= 0): ");
-                        kActual = Integer.parseInt(scanner.nextLine().trim());
+
+                        System.out.println();
+                        while (true) {
+                            System.out.print("  • Presupuesto de sensores (k >= 0): ");
+                            String inputK = scanner.nextLine().trim();
+                            try {
+                                kActual = Integer.parseInt(inputK);
+                                if (kActual < 0) {
+                                    System.out.println("    [!] El presupuesto no puede ser negativo. Intente nuevamente.");
+                                    continue;
+                                }
+                                break;
+                            } catch (NumberFormatException e) {
+                                System.out.println("    [!] Ingrese un número entero válido.");
+                            }
+                        }
                         ultimoResultado = null;
-                        System.out.println("-> Red cargada exitosamente: |V| = " + redActual.getNumVertices() 
-                                + ", |E| = " + redActual.getNumAristas() + ", presupuesto k = " + kActual);
+                        System.out.println();
+                        System.out.println("--------------------------------------------------------------------------");
+                        System.out.println("[ÉXITO] Red cargada correctamente:");
+                        System.out.println("        • Routers instalados (|V|): " + redActual.getNumVertices());
+                        System.out.println("        • Enlaces conectados (|E|): " + redActual.getNumAristas());
+                        System.out.println("        • Presupuesto asignado (k): " + kActual);
+                        System.out.println("--------------------------------------------------------------------------\n");
                     } catch (NumberFormatException e) {
-                        System.out.println("Error: Entrada numérica no válida. Operación cancelada.");
+                        System.out.println("\n[ERROR] Entrada numérica no válida. Operación cancelada.");
+                        System.out.println("==========================================================================\n");
                     }
                     break;
 
@@ -221,8 +302,32 @@ public class Main {
                     System.out.println("Opción no válida. Ingrese un número del 0 al 10.");
                     break;
             }
+
+            if (!salir) {
+                System.out.println();
+                System.out.print("Presione ENTER para volver al menú principal...");
+                scanner.nextLine();
+            }
         }
 
         scanner.close();
+    }
+
+    /**
+     * Limpia la pantalla de la consola para mantener una interfaz despejada y legible.
+     * Compatible con VS Code, macOS, Linux y Windows Terminal mediante códigos ANSI estándar.
+     */
+    public static void limpiarPantalla() {
+        try {
+            System.out.print("\033[H\033[2J\033[3J");
+            System.out.flush();
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }
+        } catch (Exception ignored) {
+            for (int i = 0; i < 30; i++) {
+                System.out.println();
+            }
+        }
     }
 }
