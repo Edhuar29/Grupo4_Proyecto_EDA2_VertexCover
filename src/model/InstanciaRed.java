@@ -1,9 +1,5 @@
 package model;
 
-/**
- * Representa la instancia de entrada del problema de decision:
- * El grafo G y el presupuesto maximo de sensores k.
- */
 public class InstanciaRed {
     private final Grafo grafo;
     private final int k;

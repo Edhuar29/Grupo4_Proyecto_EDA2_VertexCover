@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Representa un enlace de red no dirigido entre dos dispositivos (u, v).
- */
 public class Arista {
     private final int u;
     private final int v;

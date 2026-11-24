@@ -3,11 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Representa la topología de la red de comunicaciones.
- * - Vértices: routers/dispositivos (0 a numVertices - 1).
- * - Aristas: enlaces físicos de transmisión entre dispositivos.
- */
 public class Grafo {
     private final int numVertices;
     private final List<Arista> aristas;

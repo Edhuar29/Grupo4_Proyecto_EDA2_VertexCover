@@ -1,14 +1,9 @@
 package carolay;
-/**
- * Cotas teóricas de tiempo T(n) y espacio S(n) del algoritmo exacto de Vertex Cover
- * (k = presupuesto, |V| = vértices, |E| = aristas).
- */
+
 public class AnalisisComplejidad {
 
-    // Supuesto de referencia: ~1 ns por operación elemental (solo orden de magnitud).
     private static final double NS_POR_OPERACION = 1.0;
 
-    /** T(n) = O(2^k * |E|). Devuelve Long.MAX_VALUE si desborda. */
     public long calcularOperacionesTeoricasMaximas(int k, int numAristas) {
         if (k < 0 || numAristas < 0) {
             throw new IllegalArgumentException("k y numAristas deben ser >= 0");
@@ -23,7 +18,6 @@ public class AnalisisComplejidad {
         }
     }
 
-    /** Cota holgada O(k * |E|): sería la memoria si cada marco copiara las aristas. */
     public long calcularMemoriaTeoricaPila(int k, int numAristas) {
         if (k < 0 || numAristas < 0) {
             throw new IllegalArgumentException("k y numAristas deben ser >= 0");
@@ -31,14 +25,12 @@ public class AnalisisComplejidad {
         return (long) k * numAristas;
     }
 
-    /** Razón de costo entre k2 y k1 (con |E| fijo equivale a 2^(k2 - k1)). */
     public double calcularFactorCrecimiento(int k1, int k2, int numAristas) {
         long op1 = calcularOperacionesTeoricasMaximas(k1, numAristas);
         long op2 = calcularOperacionesTeoricasMaximas(k2, numAristas);
         return op1 > 0 ? (double) op2 / op1 : 0.0;
     }
 
-    /** Máximo de llamadas recursivas: 2^(k+1) - 1. */
     public long calcularNodosMaximosArbol(int k) {
         if (k < 0) {
             throw new IllegalArgumentException("k debe ser >= 0");
@@ -46,7 +38,6 @@ public class AnalisisComplejidad {
         return k >= 62 ? Long.MAX_VALUE : (1L << (k + 1)) - 1;
     }
 
-    /** Memoria auxiliar real: arreglo enS (|V|) + lista actual (k) + pila (k + 1). */
     public long calcularMemoriaAuxiliarReal(int k, int numVertices) {
         if (k < 0 || numVertices < 0) {
             throw new IllegalArgumentException("k y numVertices deben ser >= 0");
@@ -54,7 +45,6 @@ public class AnalisisComplejidad {
         return (long) numVertices + k + (k + 1);
     }
 
-    /** Compara el tiempo medido con la cota teórica. */
     public void imprimirComparativaTeoricaVsEmpirica(long tiempoRealNs, int k, int numAristas) {
         long opTeoricas = calcularOperacionesTeoricasMaximas(k, numAristas);
         double peorCasoNs = opTeoricas * NS_POR_OPERACION;
@@ -79,7 +69,6 @@ public class AnalisisComplejidad {
         System.out.println("Nota: la cota es asintótica; la comparación es de orden de magnitud.");
     }
 
-    /** Informe completo para la opción 10 del menú. */
     public void mostrarAnalisisTeorico(int k, int numVertices, int numAristas,
                                        long tiempoRealNs, long nodosExplorados) {
         long nodosMax = calcularNodosMaximosArbol(k);
@@ -95,7 +84,7 @@ public class AnalisisComplejidad {
         }
         System.out.println("S(n) real, O(|V| + k): " + calcularMemoriaAuxiliarReal(k, numVertices) + " celdas");
         System.out.println("Cota holgada O(k * |E|): " + calcularMemoriaTeoricaPila(k, numAristas));
-        System.out.println("Búsqueda: exponencial en k. Verificación (Eduardo): lineal, O(|V| + |E|).");
+        System.out.println("Búsqueda: exponencial en k. Verificación: lineal, O(|V| + |E|).");
         imprimirComparativaTeoricaVsEmpirica(tiempoRealNs, k, numAristas);
     }
 }

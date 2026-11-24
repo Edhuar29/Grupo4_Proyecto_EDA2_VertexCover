@@ -3,12 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Encapsula la salida producida por el algoritmo:
- * - Decision: si existe o no cobertura con el presupuesto k (true / false).
- * - Certificado: lista de nodos seleccionados como sensores (testigo S).
- * - Metricas: tiempo medido y memoria.
- */
 public class ResultadoSolucion {
     private boolean tieneSolucion;
     private List<Integer> certificado;
